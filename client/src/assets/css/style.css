@@ -1,0 +1,313 @@
+.form-control {
+    outline: 0;
+    border-color: #ECECEC;
+    border-style: solid;
+    border-width: 1px;
+    width: 95%;
+    background-color: #ffffff;
+    padding: 6px;
+    border-radius: 2px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.angucomplete-holder {
+    position: relative;
+}
+
+.angucomplete-dropdown {
+    border-color: #ececec;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    width: 250px;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 9999;
+    position: absolute;
+    /*top: 32px;
+    left: 0px;
+    */
+    margin-top: -6px;
+    background-color: #ffffff;
+}
+
+.angucomplete-searching {
+    color: #acacac;
+    font-size: 14px;
+}
+
+.angucomplete-description {
+    font-size: 14px;
+}
+
+.angucomplete-row {
+    padding: 5px;
+    color: #000000;
+    margin-bottom: 4px;
+
+}
+
+.angucomplete-selected-row, .angucomplete-row:hover {
+    background-color: lightblue;
+    color: #ffffff;
+}
+
+.angucomplete-image-holder {
+    padding-top: 2px;
+    float: left;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.angucomplete-image {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+    border-color: #ececec;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.angucomplete-image-default {
+    background-image: url('../images/user.gif');
+    
+    background-position: center;
+    background-size: contain;
+    height: 34px;
+    width: 34px;
+}
+
+
+
+
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 80px;
+}
+
+.animate-img{
+    display: block;
+    margin: 50px auto;
+}
+
+[animate-in-view] {
+    opacity: 0;
+    transform: translateY(150px);
+    transition: all 2s;
+}
+[animate-in-view].show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width:80%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width:18%;
+}
+.actionBox .form-group * {
+    width:100%;
+}
+.taskDescription {
+    margin-top:10px 0;
+}
+.commentList {
+    padding:0;
+    list-style:none;
+    max-height:200px;
+    overflow:auto;
+}
+.commentList li {
+    margin:0;
+    margin-top:10px;
+}
+.commentList li > div {
+    display:table-cell;
+}
+.commenterImage {
+    width:30px;
+    margin-right:5px;
+    height:100%;
+    float:left;
+}
+.commenterImage img {
+    width:100%;
+    border-radius:50%;
+}
+.commentText .commentor {
+    margin:0;
+}
+.sub-text {
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
+}
+.actionBox {
+    border-top:1px dotted #bbb;
+    padding:10px;
+}
+.highlight-text{
+    color: green;
+}
+
+
+
+.highlight{
+    padding: 9px 14px;
+    margin-bottom: 14px;
+    background-color: #F7F7F9;
+    border: 1px solid #E1E1E8;
+    border-radius: 4px;
+}
+.bs-docs-footer {
+   /* padding-top: 50px;
+    padding-bottom: 50px;
+    margin-top: 100px;*/
+    color: #99979c;
+    text-align: center;
+    background-color: #34495e;
+    
+    height: 80px; /* This should be same as margin-botton of body */
+    position: absolute;
+    bottom: 0;
+    width: 100%; 
+}
+
+.profilePicBox{
+    height: 150px;
+    width: 150px;
+}
+
+
+
+.form-group .help-block {
+  display: none;
+}
+
+.form-group.has-error .help-block {
+  display: block;
+}
+
+.dividerLine{
+	background-color: black;
+}
+
+.chat-message-panel{
+   height: 100%;
+   overflow-y: auto; 
+   overflow-x: hidden;
+}
+
+.chatForm{
+    position: absolute; 
+    width: 100%; 
+    height: 50px; 
+    bottom:0;
+    padding-top: 40px;
+}
+
+.chat-container{
+    position: relative;  
+    height: 500px; 
+}
+
+.online-member-panel{
+    background: #a9e4f7; /* Old browsers */
+    background: -moz-linear-gradient(top,  #a9e4f7 0%, #0fb4e7 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a9e4f7), color-stop(100%,#0fb4e7)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #a9e4f7 0%,#0fb4e7 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #a9e4f7 0%,#0fb4e7 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #a9e4f7 0%,#0fb4e7 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #a9e4f7 0%,#0fb4e7 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9e4f7',                 endColorstr='#0fb4e7',GradientType=0 );
+}
+
+.online-member-panel.active{
+    border:2px solid black;
+}
+
+.bubble-sender{
+    max-width: 100px;
+}
+
+.bubble-content{
+    max-width: 200px;
+}
+
+.bubble.left 
+{
+    display: inline-block;
+    position: relative;
+    max-width: 400px;
+    min-width: 50px;
+    min-height: 60px;
+    clear:both;
+    float: left;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+    background: #3498db;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    margin-left: 15px;
+}
+
+.bubble.left:after 
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 6px 20px 6px 0;
+    border-color: transparent #3498db;
+    display: block;
+    width: 0;
+    z-index: 1;
+    margin-top: -6px;
+    left: -20px;
+    top: 26%;
+}
+
+.bubble.right 
+{
+    display: inline-block;
+    position: relative;
+    max-width: 400px;
+    min-width: 50px;
+    min-height: 60px;
+    float: right;
+    margin-bottom: 5px;
+    padding-right: 5px;
+    margin-right: 15px;
+    padding-top: 5px;
+    background: #bdc3c7;
+    clear:both;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.bubble.right:after 
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 6px 0 6px 20px;
+    border-color: transparent #bdc3c7;
+    display: block;
+    width: 0;
+    z-index: 1;
+    margin-top: -6px;
+    right: -20px;
+    top: 26%;
+}
