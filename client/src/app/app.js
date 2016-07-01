@@ -33,11 +33,18 @@ angular.module('app').controller('AppCtrl', ['$scope','$cookieStore','$location'
             });
         }
     };
-    
+
+        chatsocket.on('test',function(data){
+                console.log("test event caught: "+data);
+         });
+        chatsocket.emit('message',{key:'value'});
+
+
     var accessLevels = {
         'user': ['user'],
         'admin': ['admin','user']
     };
+
 
     $rootScope.hasAccess = function(level){
         if($rootScope.currentUser && accessLevels[$rootScope.currentUser['role']]){
