@@ -13,7 +13,7 @@
     "connect-multiparty":"2.0.0",
     "express-jwt":"3.4.0",
     "file-stream-rotator":"0.0.6",
-    "socket.io":"*",
+    "socket.io":"1.4.8",
     "express": "~4.13.4",
     "hbs": "~4.0.0",
     "morgan": "~1.7.0",
