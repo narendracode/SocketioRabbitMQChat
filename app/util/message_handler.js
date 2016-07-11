@@ -7,7 +7,7 @@ function messageHandler(io){
     
     if(err){
        throw err;  
-     }
+    }
 
     options.onMessageReceived = onMessageReceived;
 
@@ -19,27 +19,20 @@ function messageHandler(io){
       
       socket.on('disconnect', socketDisconnect);
       socket.on('message', socketMessage);
-      socket.on('user:sendmsg',socketUserSendMsg);
       
-      function socketUserSendMsg(text){
-        console.log('message from user : '+text);
-        socket.broadcast.emit('user:sendmsg',text);
-      }
-
       function socketDisconnect(e){
         console.log('Disconnect ', e);
       }
 
-      function socketMessage(text){
-        var message =  {text: text, date: new Date()};
-        io.emit('message', message)
-        // options.emitMessage(message);
+      function socketMessage(message){
+        console.log("Socket event 'message' ");
+        options.emitMessage(message);
       }
     }
 
     function onMessageReceived(message){
-
-      io.emit('message', message)
+      console.log("onMessageReceived before emitting 'message' ");
+      io.emit('message', message);
     }
 
    });

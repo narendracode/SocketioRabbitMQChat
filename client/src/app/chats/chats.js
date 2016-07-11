@@ -57,20 +57,18 @@ angular.module('chats').controller('ChatsController',['$scope','$resource','$sta
                           var data = {
                               message: $scope.message 
                           };
-                          $scope.chats.push(data);
-                         //$scope.chats.push($scope.message);
-                        chatsocket.emit('user:sendmsg',data);
-                          $scope.message = '';
+                        //$scope.chats.push(data);
+                        chatsocket.emit('message',data);
+                        $scope.message = '';
                    }
              };                                          
                                                           
-             chatsocket.on('user:sendmsg',function(data){
-                 console.log(" socket on user:sendmsg: "+data);
-                 $scope.chats.push(data);
-                 $scope.$apply();
-            });
                                                           
-                                                          
+            chatsocket.on('message',function(data){
+                  console.log("message: "+data);
+                  $scope.chats.push(data);
+                  $scope.$apply();
+            });                                            
                                                           
                                                           
                                                           /* $scope.members =  members;                                                  

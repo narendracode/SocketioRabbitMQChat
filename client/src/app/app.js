@@ -36,7 +36,7 @@ angular.module('app').controller('AppCtrl', ['$scope','$cookieStore','$location'
         chatsocket.on('test',function(data){
                 console.log("test event caught: "+JSON.stringify(data));
          });
-        chatsocket.emit('message',{key:'value'});
+       
 
 
     var accessLevels = {

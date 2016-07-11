@@ -18,7 +18,6 @@ function rabbitMQMessages(address, callback){
 
 
       ch.assertExchange('messages', 'fanout', {durable: false});
-
       //setup a queue for receiving messages
       ch.assertQueue('', {exclusive: true}, function(err, q){
         if(err){
@@ -26,31 +25,32 @@ function rabbitMQMessages(address, callback){
         } 
 
 
-        ch.bindQueue(q.queue, 'messages', '');
-
+        ch.bindQueue(q.queue, 'messages', '');         
+          
         var options = {
-          emitMessage: emitMessage,
-          onMessageReceived: onMessageReceived
+          emitMessage: emitMessage
         };
 
         //listen for messages
         ch.consume(q.queue, function(msg){
+          console.log("Consume message from Queue %s", msg.content.toString());
           options.onMessageReceived(JSON.parse(msg.content.toString())); 
         }, {noAck: true});
 
+
+          function emitMessage(message){
+              //Publish Message to queue
+              console.log("Publish Message to Queue : "+JSON.stringify(message));
+              ch.publish('messages', '', new Buffer(JSON.stringify(message))); 
+          }
+
+         
         callback(null, options);
 
-        function emitMessage(message){
-
-          ch.publish('messages', '', new Buffer(JSON.stringify(message))); 
-        }
-
-        function onMessageReceived(){
-          console.log('Message received. Nothing to do.');  
-        }
-      });
+      });//assertQueue
 
       
-    });
+    });//create channel
+      
   });
 }
