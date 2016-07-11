@@ -57,9 +57,9 @@ angular.module('chats').controller('ChatsController',['$scope','$resource','$sta
                           var data = {
                               message: $scope.message 
                           };
-                          //$scope.chats.push(data);
-                         $scope.chats.push($scope.message);
-                        chatsocket.emit('user:sendmsg',$scope.message);
+                          $scope.chats.push(data);
+                         //$scope.chats.push($scope.message);
+                        chatsocket.emit('user:sendmsg',data);
                           $scope.message = '';
                    }
              };                                          

@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('SocketioRabbitMQChat:server');
 var http = require('http');
+var messageHandler = require('../app/util/message_handler');
+
 /**
  * Get port from environment and store in Express.
  */
@@ -31,39 +33,9 @@ var io = require('socket.io')(server);
 
 app.io = io;
 
-/*app.use(function(req,res,next){
-        req.io = io;
-        console.log('req.io set a middleware.');
-        next();
-});
-*/
-io.on('connection',function(socket){
-        console.log("new socket connection created.");
+//Handle Messages
+messageHandler(io);
 
-        socket.on('message',function(text){
-                console.log('message from emitter : '+text);
-        });
-
-
-        socket.on('user:sendmsg',function(text){
-            console.log('message from user: '+text);
-            socket.broadcast.emit('user:sendmsg',text);
-        });
-
-
-
-        socket.on('disconnect',function(e){
-                console.log("socket disconnected: "+e);
-        });
-
-});
-
-/*app.use(function(req,res,next){
-        console.log("io is set in response.. :"+io);
-   res.io = io;
-        next();
-});
-*/
 
 
 /**
