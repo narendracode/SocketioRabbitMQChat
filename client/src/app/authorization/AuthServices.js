@@ -1,4 +1,4 @@
-var module = angular.module('authorization.services',['ngResource','ngCookies','ngStorage']);
+var module = angular.module('authorization.services',['ngResource','ngStorage']);
 
 module.factory("AuthHttpRequestInterceptor",function ($localStorage) {
     return {
@@ -10,10 +10,8 @@ module.factory("AuthHttpRequestInterceptor",function ($localStorage) {
     };
 });
 
-module.factory('AuthService',function($resource,$rootScope,$location,$cookieStore,$localStorage){
-
+module.factory('AuthService',function($resource,$rootScope,$location,$localStorage){
   var LoginResource = $resource('/auth/login');
-  var LogoutResource = $resource('/auth/logout');
   var SignupResource = $resource('/auth/signup'); 
 
   function parseToken(token){
@@ -72,13 +70,9 @@ module.factory('AuthService',function($resource,$rootScope,$location,$cookieStor
 	}); 
       },
       logout : function(callback){
-	var logoutResource = new LogoutResource();
-	logoutResource.$save(function(result){
 			$rootScope.currentUser = null;
-			$cookieStore.remove('user');
 			delete $localStorage.token;
-			callback(result);
-	});
+			callback({result});
       },
       signup: function(user,callback){
 	var signupResource = new SignupResource();
@@ -91,7 +85,6 @@ module.factory('AuthService',function($resource,$rootScope,$location,$cookieStor
                 $localStorage.token = result.token;
                 console.log(" data after sign up : "+JSON.stringify(result));
                 var user = parseToken(result.token);
-                // $cookieStore.put('user',user);
                 $rootScope.currentUser = user;
             }
         }
@@ -106,7 +99,6 @@ module.factory('AuthService',function($resource,$rootScope,$location,$cookieStor
              userData = JSON.parse(urlBase64Decode(encoded));
              userData.type = true;
              if(userData){
-               // $cookieStore.put('user',userData);
 				$rootScope.currentUser = userData;
              }
              callback(userData);
@@ -115,5 +107,4 @@ module.factory('AuthService',function($resource,$rootScope,$location,$cookieStor
     }
   }
   return service;
-  
 });

@@ -6,11 +6,12 @@ angular.module('chats').config(['$stateProvider','$urlRouterProvider',
                      $stateProvider
                         .state('chat',{
                                   url: "/chat/",
-                                  templateUrl: 'app/chats/chat.tpl.html',
+                                  templateUrl: 'app/chats/chat1.tpl.html',
                                   controller: 'ChatsController',
                                   resolve : {
                                       members : function($resource,$q){
-                                          return $resource('/chat/member/online').query().$promise;                    
+                                          //return $resource('/chat/member/online').query().$promise; 
+                                          return [];
                                       }
                                   },
                                   data: {
@@ -21,24 +22,24 @@ angular.module('chats').config(['$stateProvider','$urlRouterProvider',
               }
 ]);
 
+/*
 angular.module('chats').run(function($rootScope,$location){
     return $rootScope.$on("$stateChangeStart", function(event, next) {
         if(next){
             if(next.data){
                 if(next.data.authRequired){
                     if($rootScope.currentUser){
-                        //do nothing 
+                         
                     }else{
-                        $location.path('/login/');
-                        //not authorized to access chats
+                       $location.path('/login/');
                     }
                 }
             }
         }else{
            console.log("found nothing for authentication..."); 
         }
-    });
-});
+    }); 
+}); */
 
 angular.module('chats').factory('chatsocket',function(){
     var socket = io.connect("http://localhost:3000");
@@ -47,7 +48,32 @@ angular.module('chats').factory('chatsocket',function(){
 
 angular.module('chats').controller('ChatsController',['$scope','$resource','$state','$location','chatsocket','$rootScope','$http','$resource','members',
                                                       function($scope,$resource,$state,$location,chatsocket,$rootScope,$http,$resource,members){
-               $scope.members =  members;                                                  
+             
+                    
+             $scope.chats = [];
+             
+             $scope.send = function(){
+                    if($scope.message){
+                          var data = {
+                              message: $scope.message 
+                          };
+                          //$scope.chats.push(data);
+                         $scope.chats.push($scope.message);
+                        chatsocket.emit('user:sendmsg',$scope.message);
+                          $scope.message = '';
+                   }
+             };                                          
+                                                          
+             chatsocket.on('user:sendmsg',function(data){
+                 console.log(" socket on user:sendmsg: "+data);
+                 $scope.chats.push(data);
+                 $scope.$apply();
+            });
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          /* $scope.members =  members;                                                  
                $scope.chats = [];
                $scope.message = '';
                $scope.selectedMember = '';
@@ -67,7 +93,7 @@ angular.module('chats').controller('ChatsController',['$scope','$resource','$sta
                        chatsocket.emit('user:sendmsg',data);
                        $scope.message = '';
                    }
-                };//send()
+                };
                 
                                                           
                 chatsocket.on('user:updateList',function(data){
@@ -82,21 +108,16 @@ angular.module('chats').controller('ChatsController',['$scope','$resource','$sta
             };                                           
                                                           
             $scope.selectMemberForChat = function(userName){
-                if(userName){//checking if userName is valid
-                    if($scope.selectedMember){//if selectedMumber was previously set
+                if(userName){
+                    if($scope.selectedMember){
                         if((userName !== $scope.selectedMember)){
-                            //set active
+                          
                             $scope.selectedMember = userName;
                             
-                            //load previous chats
                             loadPrevChat();
                         }
                     }else{
-                        //first time user selection
-                        //set active
                         $scope.selectedMember = userName;
-                       
-                        //load previous chats
                         loadPrevChat();
                     }
                 }
@@ -145,14 +166,12 @@ angular.module('chats').controller('ChatsController',['$scope','$resource','$sta
                                                           
         chatsocket.on('user:typing',function(data){
          if(data.status){
-            //display as typing
              $scope.typingLabel = data.sender+' is typing';
          }else{
-            //stop typing display
              $scope.typingLabel = '';
          }
             $scope.$apply();
         });
-               
+          */     
      }
 ]);

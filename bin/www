@@ -44,6 +44,14 @@ io.on('connection',function(socket){
                 console.log('message from emitter : '+text);
         });
 
+
+        socket.on('user:sendmsg',function(text){
+            console.log('message from user: '+text);
+            socket.broadcast.emit('user:sendmsg',text);
+        });
+
+
+
         socket.on('disconnect',function(e){
                 console.log("socket disconnected: "+e);
         });
