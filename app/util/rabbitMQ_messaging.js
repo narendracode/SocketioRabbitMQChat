@@ -21,7 +21,7 @@ function rabbitMQMessages(address, callback){
       //setup a queue for receiving messages
       //The fanout exchange is very simple. It just broadcasts all the messages it receives to all the queues it knows.
         
-        
+      
         
       //when we supply queue name as an empty string, we create a non-durable queue.
         ch.assertQueue('message-queue', {exclusive: true}, function(err, q){
@@ -33,10 +33,12 @@ function rabbitMQMessages(address, callback){
 
         //Tell the exchange to send messages to our queue. That relationship between exchange and a queue is called a binding.
         // Using rabbitmqctl list_bindings you can verify that the code actually creates bindings and queues as we want.
-            ch.bindQueue(q.queue, 'messages', 'onetoone.msg');         
+            ch.bindQueue(q.queue, 'messages', 'onetoone.msg');  
+            ch.bindQueue(q.queue,'messages','onetoone.join');
           
         var options = {
-          emitMessage: emitMessage
+          emitMessage: emitMessage,
+          emitJoin: emitJoin
         };
 
         //listen for messages
@@ -45,18 +47,32 @@ function rabbitMQMessages(address, callback){
           options.onMessageReceived(JSON.parse(msg.content.toString())); 
         }, {noAck: true});
 
-
-          function emitMessage(message){
+                        
+        function emitMessage(message){
               //Publish Message to queue
               console.log("Publish Message to Queue : "+JSON.stringify(message));
               ch.publish('messages', 'onetoone.msg', new Buffer(JSON.stringify(message))); 
               //The empty string as second parameter means that we don't want to send the message to any specific queue. We want only to publish it to our 'logs' exchange.
-          }
+        }
 
+            function emitJoin(message){
+                //Publish Message to Join queue
+                console.log("Publish Message to Join Queue : "+JSON.stringify(message));
+                ch.publish('messages', 'onetoone.join', new Buffer(JSON.stringify(message))); 
+                //The empty string as second parameter means that we don't want to send the message to any specific queue. We want only to publish it to our 'logs' exchange.
+            }
          
+            
+            
+    
         callback(null, options);
 
       });//assertQueue
+        
+        
+        
+        
+        
 
       
     });//create channel

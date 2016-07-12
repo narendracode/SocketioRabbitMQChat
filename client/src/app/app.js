@@ -43,7 +43,7 @@ angular.module('app').controller('AppCtrl', ['$scope','$cookieStore','$location'
         console.log("notify:client event caught");
         if($localStorage.token){
             AuthService.currentUser(function(result){
-                chatsocket.emit('join:app',{user:result.username});
+                chatsocket.emit('join:app',{message:result.username+" joined "});
             });
         }
     });

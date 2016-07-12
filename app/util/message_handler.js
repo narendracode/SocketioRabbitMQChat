@@ -26,6 +26,7 @@ function messageHandler(io){
         
       function joinApp(data){
           console.log("join chat "+JSON.stringify(data)); 
+          options.emitJoin(data);
       }
         
         
