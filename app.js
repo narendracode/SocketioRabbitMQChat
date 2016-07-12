@@ -7,8 +7,12 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var passport = require('passport');
+var config = require('./config/config');
+var mongoose = require("mongoose");
 
 var app = express();
+var fs = require('fs');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +32,26 @@ app.use('/app',express.static(path.join(__dirname, 'client/src/app')));
 app.use('/common',express.static(path.join(__dirname, 'client/src/common')));
 app.use('/assets',express.static(path.join(__dirname, 'client/src/assets')));
 app.use('/files',express.static(path.join(__dirname,'uploads')));
+
+
+
+var connect = function(){
+        var options = {
+               server: {
+                     socketOptions:{
+                         keepAlive : 1
+                     }
+             }
+     };
+     console.log('info', 'connected to mongo db with config url : '+config.db);
+     mongoose.connect(config.db,options);
+ };
+
+connect();
+mongoose.connection.on('error',console.log);
+mongoose.connection.on('disconnected',connect);
+require('./app/auth/passport')(passport);
+var cert = fs.readFileSync('key.pem');
 
 
 

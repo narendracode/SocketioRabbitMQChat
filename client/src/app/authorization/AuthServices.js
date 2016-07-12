@@ -55,13 +55,13 @@ module.factory('AuthService',function($resource,$rootScope,$location,$localStora
   var service = {
       login: function(user,callback){
 	var loginResource = new LoginResource();
-	loginResource.email = user.email;
+	loginResource.username = user.username;
 	loginResource.password = user.password;
 	loginResource.$save(function(result){
         if(typeof result !== 'undefined'){
             if(result.type){
-                $localStorage.token = result.token;
-                var user = parseToken(result.token);
+                $localStorage.token = result.data.token;
+                var user = parseToken(result.data.token);
                 console.log(" data after login : "+JSON.stringify(user));
                 $rootScope.currentUser = user;
             }
@@ -72,19 +72,17 @@ module.factory('AuthService',function($resource,$rootScope,$location,$localStora
       logout : function(callback){
 			$rootScope.currentUser = null;
 			delete $localStorage.token;
-			callback({result});
+			callback();
       },
       signup: function(user,callback){
 	var signupResource = new SignupResource();
-	signupResource.email = user.email;
+	signupResource.username = user.username;
 	signupResource.password = user.password;
-    signupResource.name = user.name;
 	signupResource.$save(function(result){
         if(typeof result !== 'undefined'){
             if(result.type){
-                $localStorage.token = result.token;
-                console.log(" data after sign up : "+JSON.stringify(result));
-                var user = parseToken(result.token);
+                $localStorage.token = result.data.token;
+                var user = parseToken(result.data.token);
                 $rootScope.currentUser = user;
             }
         }
@@ -97,6 +95,7 @@ module.factory('AuthService',function($resource,$rootScope,$location,$localStora
      	 if (typeof token !== 'undefined') {
              var encoded = token.split('.')[1];
              userData = JSON.parse(urlBase64Decode(encoded));
+             console.log(" current user is called : "+JSON.stringify(userData));
              userData.type = true;
              if(userData){
 				$rootScope.currentUser = userData;

@@ -14,12 +14,21 @@ function messageHandler(io){
     io.on('connection', websocketConnect);
 
     function websocketConnect(socket){
-
-      console.log('New connection')
+      console.log('New connection id:'+socket.id)
+      
+      socket.emit("notify:client");
       
       socket.on('disconnect', socketDisconnect);
+        
       socket.on('message', socketMessage);
-      
+       
+      socket.on('join:app',joinApp);
+        
+      function joinApp(data){
+          console.log("join chat "+JSON.stringify(data)); 
+      }
+        
+        
       function socketDisconnect(e){
         console.log('Disconnect ', e);
       }

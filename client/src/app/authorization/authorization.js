@@ -49,28 +49,31 @@ angular.module('authorization').controller('AuthController',['$scope','$resource
            $scope.signup = function(){
                 $scope.$broadcast('show-errors-check-validity'); 
                 if ($scope.singupForm.$valid){
-                  AuthService.signup({email: $scope.email,password: $scope.password, name: $scope.name},function(result){
+                  AuthService.signup({username: $scope.email,password: $scope.password},function(result){
+                    console.log(" result "+JSON.stringify(result));
                     if(!result['type']){
                             $scope.errorExists = true;
                             $scope.loginErrorMessage = result['data'];
                     }else{
-                            chatsocket.emit('user:login',{email: $rootScope.currentUser.email});
+                            console.log(" username :"+$rootScope.currentUser.username);
+                           // chatsocket.emit('user:login',{username: $rootScope.currentUser.username});
                             $location.path('/') 
                     }
                 });
               }   
           }//signup
         
+        
          $scope.login = function(){
              $scope.$broadcast('show-errors-check-validity'); 
              if ($scope.loginForm.$valid){
- AuthService.login({'email':$scope.email,'password':$scope.password},function(result){
+ AuthService.login({'username':$scope.email,'password':$scope.password},function(result){
                      if(!result['type']){
                          $scope.errorExists = true;
                          $scope.loginErrorMessage = result['data'];
                     }else{
                         console.log(" $$$ response from AuthService.login, info returned : "+JSON.stringify(result));
-                       //chatsocket.emit('user:login',{email: $rootScope.currentUser.email});
+                        // chatsocket.emit('user:login',{username: $rootScope.currentUser.username});
                         $location.path("/") 
                     }
                  });

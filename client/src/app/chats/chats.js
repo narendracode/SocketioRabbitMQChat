@@ -1,4 +1,4 @@
-angular.module('chats',['ngResource','angularMoment','ui.router','luegg.directives']);
+angular.module('chats',['ngResource','angularMoment','ui.router','luegg.directives','chat.services']);
 
 angular.module('chats').config(['$stateProvider','$urlRouterProvider',
               function($stateProvider,$urlRouterProvider){
@@ -41,10 +41,7 @@ angular.module('chats').run(function($rootScope,$location){
     }); 
 }); */
 
-angular.module('chats').factory('chatsocket',function(){
-    var socket = io.connect("http://localhost:3000");
-    return socket;
-});
+
 
 angular.module('chats').controller('ChatsController',['$scope','$resource','$state','$location','chatsocket','$rootScope','$http','$resource','members',
                                                       function($scope,$resource,$state,$location,chatsocket,$rootScope,$http,$resource,members){

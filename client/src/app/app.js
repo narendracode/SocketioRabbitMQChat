@@ -6,6 +6,7 @@ angular.module('app', [
     ,'authorization.services'
     ,'ngCookies'
     ,'chats'
+    ,'chat.services'
 ]);
 
 angular.module('app').config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -13,16 +14,15 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
     $stateProvider
         .state('index', {
         url: "/",
-        templateUrl: "app/index.tpl.html",
-        controller: 'AppCtrl'
+        templateUrl: "app/index.tpl.html"
     });
 }]);
 
-angular.module('app').factory('chatsocket',function(){
+/*angular.module('app').factory('chatsocket',function(){
     var socket = io.connect("http://localhost:3000");
     return socket;
 }); 
-
+*/
 
 angular.module('app').controller('AppCtrl', ['$scope','$cookieStore','$location','AuthService','$rootScope','chatsocket','$localStorage', function($scope,$cookieStore,$location,AuthService,$rootScope,chatsocket,$localStorage) {
     $scope.myInit = function(){
@@ -33,11 +33,21 @@ angular.module('app').controller('AppCtrl', ['$scope','$cookieStore','$location'
         }
     };
 
+    
+    
         chatsocket.on('test',function(data){
                 console.log("test event caught: "+JSON.stringify(data));
          });
        
-
+    chatsocket.on('notify:client',function(){
+        console.log("notify:client event caught");
+        if($localStorage.token){
+            AuthService.currentUser(function(result){
+                chatsocket.emit('join:app',{user:result.username});
+            });
+        }
+    });
+    
 
     var accessLevels = {
         'user': ['user'],

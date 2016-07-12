@@ -16,3 +16,9 @@ module.factory('ChatService',function($resource){
     }
                     );
 });
+
+
+module.factory('chats').factory('chatsocket',function(){
+    var socket = io.connect("http://localhost:3000");
+    return socket;
+});
