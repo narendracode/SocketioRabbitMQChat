@@ -17,7 +17,7 @@ function rabbitMQMessages(address, callback){
       } 
 
 
-      ch.assertExchange('messages', 'direct', {durable: false});
+      ch.assertExchange('messages', 'topic', {durable: false});
       //setup a queue for receiving messages
       //The fanout exchange is very simple. It just broadcasts all the messages it receives to all the queues it knows.
         
@@ -33,7 +33,7 @@ function rabbitMQMessages(address, callback){
 
         //Tell the exchange to send messages to our queue. That relationship between exchange and a queue is called a binding.
         // Using rabbitmqctl list_bindings you can verify that the code actually creates bindings and queues as we want.
-          ch.bindQueue(q.queue, 'messages', 'message-queue');         
+            ch.bindQueue(q.queue, 'messages', 'onetoone.msg');         
           
         var options = {
           emitMessage: emitMessage
@@ -49,7 +49,7 @@ function rabbitMQMessages(address, callback){
           function emitMessage(message){
               //Publish Message to queue
               console.log("Publish Message to Queue : "+JSON.stringify(message));
-              ch.publish('messages', 'message-queue', new Buffer(JSON.stringify(message))); 
+              ch.publish('messages', 'onetoone.msg', new Buffer(JSON.stringify(message))); 
               //The empty string as second parameter means that we don't want to send the message to any specific queue. We want only to publish it to our 'logs' exchange.
           }
 
