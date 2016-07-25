@@ -35,6 +35,31 @@ angular.module('app').controller('AppCtrl', ['$scope','$cookieStore','$location'
 
     
     
+    $scope.jobs = [
+        {name:'job1'},
+        {name:'job2'},
+        {name:'job3'},
+        {name:'job4'}
+    ];
+    
+    $scope.moveup = function(index){
+        console.log("index of row is : "+index);
+        if(index>0){
+            var temp = $scope.jobs[index-1];
+            $scope.jobs[index-1] = $scope.jobs[index];
+            $scope.jobs[index] = temp;
+        }
+    }
+    
+    
+    var swapArrayElements = function(arr, indexA, indexB) {
+        var temp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = temp;
+    };
+    
+    
+    
         chatsocket.on('test',function(data){
                 console.log("test event caught: "+JSON.stringify(data));
          });

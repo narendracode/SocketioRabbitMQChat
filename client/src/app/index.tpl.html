@@ -20,6 +20,17 @@
                 only for role admin.. 
             </div>
         </div>
+        
+        <table  class="table">
+            <tr ng-repeat="job in jobs">
+                <td>{{job.name}}</td>
+                <td>
+                <button class="btn btn-info"  ng-click="moveup($index)">UP</button>
+                </td>
+            </tr>
+
+        </table>
+        
     </div>
    
 </div>
