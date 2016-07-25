@@ -50,15 +50,7 @@ angular.module('app').controller('AppCtrl', ['$scope','$cookieStore','$location'
             $scope.jobs[index] = temp;
         }
     }
-    
-    
-    var swapArrayElements = function(arr, indexA, indexB) {
-        var temp = arr[indexA];
-        arr[indexA] = arr[indexB];
-        arr[indexB] = temp;
-    };
-    
-    
+
     
         chatsocket.on('test',function(data){
                 console.log("test event caught: "+JSON.stringify(data));
